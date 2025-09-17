@@ -1,20 +1,10 @@
-package com.accenture.application.domain.models;
+package com.accenture.application.domain.dtos;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import java.util.UUID;
 
-import com.accenture.application.domain.dtos.EnderecoDTO;
-
-@Entity
-@Table(name = "endereco")
-public class Endereco {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+public class EnderecoDTO {
 
     @NotBlank(message = "O CEP é obrigatório.")
     @Size(min = 8, max = 8, message = "O CEP deve ter 8 dígitos.")
@@ -38,31 +28,8 @@ public class Endereco {
 
     @NotBlank(message = "O estado é obrigatório.")
     private String estado;
-    
-    // Construtor padrão (necessário para o JPA)
-    public Endereco() {
-    }
-
-    // Novo construtor para criar a entidade a partir do DTO
-    public Endereco(EnderecoDTO enderecoDTO) {
-        this.cep = enderecoDTO.getCep();
-        this.rua = enderecoDTO.getRua();
-        this.numero = enderecoDTO.getNumero();
-        this.bairro = enderecoDTO.getBairro();
-        this.cidade = enderecoDTO.getCidade();
-        this.uf = enderecoDTO.getUf();
-        this.estado = enderecoDTO.getEstado();
-    }
 
     // Getters e Setters
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public String getCep() {
         return cep;
     }

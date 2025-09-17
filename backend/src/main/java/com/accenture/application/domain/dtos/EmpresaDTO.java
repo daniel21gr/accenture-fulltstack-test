@@ -1,39 +1,26 @@
-package com.accenture.application.domain.models;
+package com.accenture.application.domain.dtos;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
 import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Table(name = "empresa")
-public class Empresa {
+public class EmpresaDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @NotBlank(message = "O CNPJ é obrigatório.")
     @Size(min = 14, max = 14, message = "O CNPJ deve ter 14 dígitos.")
-    @Column(unique = true)
     private String cnpj;
 
     @NotBlank(message = "O nome fantasia é obrigatório.")
     private String nomeFantasia;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_endereco", nullable = false)
-    private Endereco endereco;
-    
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "empresa_fornecedor",
-        joinColumns = @JoinColumn(name = "id_empresa"),
-        inverseJoinColumns = @JoinColumn(name = "id_fornecedor")
-    )
-    private List<Fornecedor> fornecedores;
+    @NotNull(message = "O endereço é obrigatório.")
+    private EnderecoDTO endereco;
+
+    private List<FornecedorBasicoDTO> fornecedores;
 
     // Getters e Setters
     public UUID getId() {
@@ -60,19 +47,19 @@ public class Empresa {
         this.nomeFantasia = nomeFantasia;
     }
 
-    public Endereco getEndereco() {
+    public EnderecoDTO getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(Endereco endereco) {
+    public void setEndereco(EnderecoDTO endereco) {
         this.endereco = endereco;
     }
-    
-    public List<Fornecedor> getFornecedores() {
+
+    public List<FornecedorBasicoDTO> getFornecedores() {
         return fornecedores;
     }
 
-    public void setFornecedores(List<Fornecedor> fornecedores) {
+    public void setFornecedores(List<FornecedorBasicoDTO> fornecedores) {
         this.fornecedores = fornecedores;
     }
 }
