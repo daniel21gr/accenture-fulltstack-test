@@ -1,5 +1,6 @@
-package com.accenture.application.domain.dtos;
+package com.accenture.application.domain.dtos.basics;
 
+import com.accenture.application.domain.dtos.responses.EnderecoDTO;
 import com.accenture.application.domain.models.Fornecedor;
 import com.accenture.application.domain.models.TipoFornecedor;
 import jakarta.validation.constraints.Email;

@@ -1,6 +1,6 @@
 package com.accenture.application.services.impls;
 
-import com.accenture.application.domain.dtos.EnderecoDTO;
+import com.accenture.application.domain.dtos.responses.EnderecoDTO;
 import com.accenture.application.domain.models.Endereco;
 import com.accenture.application.domain.repositories.EnderecoRepository;
 import com.accenture.application.services.interfaces.IEnderecoService;

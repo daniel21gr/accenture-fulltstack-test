@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.UUID;
 
-import com.accenture.application.domain.dtos.EnderecoDTO;
+import com.accenture.application.domain.dtos.responses.EnderecoDTO;
 
 @Entity
 @Table(name = "endereco")

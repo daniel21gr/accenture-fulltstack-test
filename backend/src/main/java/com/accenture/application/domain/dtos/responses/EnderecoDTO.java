@@ -1,4 +1,4 @@
-package com.accenture.application.domain.dtos;
+package com.accenture.application.domain.dtos.responses;
 
 import com.accenture.application.domain.models.Endereco;
 

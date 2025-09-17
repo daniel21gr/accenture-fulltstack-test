@@ -9,9 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.accenture.application.domain.dtos.EmpresaDTO;
-import com.accenture.application.domain.dtos.EmpresaInputDTO;
-import com.accenture.application.domain.dtos.EmpresaInputDTO;
+import com.accenture.application.domain.dtos.inputs.EmpresaInputDTO;
+import com.accenture.application.domain.dtos.responses.EmpresaDTO;
 import com.accenture.application.domain.models.Empresa;
 import com.accenture.application.domain.models.Endereco;
 import com.accenture.application.domain.models.Fornecedor;

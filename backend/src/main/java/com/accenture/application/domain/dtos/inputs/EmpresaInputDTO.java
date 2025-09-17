@@ -1,11 +1,14 @@
-package com.accenture.application.domain.dtos;
+package com.accenture.application.domain.dtos.inputs;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.List;
 import java.util.UUID;
 
-public class EmpresaBasicoDTO {
+import com.accenture.application.domain.dtos.responses.EnderecoDTO;
+
+public class EmpresaInputDTO {
 
     private UUID id;
 

@@ -1,4 +1,4 @@
-package com.accenture.application.domain.dtos;
+package com.accenture.application.domain.dtos.responses;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import com.accenture.application.domain.dtos.basics.FornecedorBasicoDTO;
 import com.accenture.application.domain.models.Empresa;
 
 public class EmpresaDTO {
