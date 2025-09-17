@@ -3,15 +3,10 @@ package com.accenture.application.domain.dtos;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-import com.accenture.application.domain.models.Empresa;
-
-public class EmpresaDTO {
+public class EmpresaInputDTO {
 
     private UUID id;
 
@@ -24,30 +19,6 @@ public class EmpresaDTO {
 
     @NotNull(message = "O endereço é obrigatório.")
     private EnderecoDTO endereco;
-
-    private List<FornecedorBasicoDTO> fornecedores = new ArrayList<FornecedorBasicoDTO>(); 
-
-	// Construtor principal
-	public EmpresaDTO(UUID id, String cnpj, String nomeFantasia, EnderecoDTO endereco,
-			List<FornecedorBasicoDTO> fornecedores) {
-		this.id = id;
-		this.cnpj = cnpj;
-		this.nomeFantasia = nomeFantasia;
-		this.endereco = endereco;
-		this.fornecedores = fornecedores;
-	}
-
-	// Construtor de conveniência
-	public EmpresaDTO(Empresa empresa) {
-		this.id = empresa.getId();
-		this.cnpj = empresa.getCnpj();
-		this.nomeFantasia = empresa.getNomeFantasia();
-		this.endereco = new EnderecoDTO(empresa.getEndereco());
-
-		// Mapeia a lista de entidades para a lista de DTOs simples
-		this.fornecedores = empresa.getFornecedores().stream().map(FornecedorBasicoDTO::new)
-				.collect(Collectors.toList());
-	}
 
     // Getters e Setters
     public UUID getId() {
@@ -80,13 +51,5 @@ public class EmpresaDTO {
 
     public void setEndereco(EnderecoDTO endereco) {
         this.endereco = endereco;
-    }
-
-    public List<FornecedorBasicoDTO> getFornecedores() {
-        return fornecedores;
-    }
-
-    public void setFornecedores(List<FornecedorBasicoDTO> fornecedores) {
-        this.fornecedores = fornecedores;
     }
 }

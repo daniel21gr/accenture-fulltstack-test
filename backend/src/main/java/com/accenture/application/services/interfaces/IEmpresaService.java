@@ -6,16 +6,18 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.accenture.application.domain.dtos.EmpresaDTO;
+import com.accenture.application.domain.dtos.EmpresaInputDTO;
+import com.accenture.application.domain.dtos.EmpresaInputDTO;
 import com.accenture.application.domain.models.Empresa;
 
 public interface IEmpresaService {
-	Empresa criarEmpresa(EmpresaDTO empresaDTO);
+	EmpresaDTO criarEmpresa(EmpresaInputDTO empresaInputDTO);
 	
 	Empresa buscarEmpresaPorId(UUID id);
 	
 	Page<Empresa> listarEmpresas(Pageable pageable);
 	
-	Empresa atualizarEmpresa(UUID id, EmpresaDTO empresaDTO);
+	EmpresaDTO atualizarEmpresa(UUID id, EmpresaInputDTO empresaInputDTO);
 	
 	void deletarEmpresa(UUID id);
 }

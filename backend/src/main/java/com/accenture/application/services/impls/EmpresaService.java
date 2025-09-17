@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.accenture.application.domain.dtos.EmpresaDTO;
+import com.accenture.application.domain.dtos.EmpresaInputDTO;
+import com.accenture.application.domain.dtos.EmpresaInputDTO;
 import com.accenture.application.domain.models.Empresa;
 import com.accenture.application.domain.models.Endereco;
 import com.accenture.application.domain.models.Fornecedor;
@@ -36,18 +38,18 @@ public class EmpresaService implements IEmpresaService {
 
 	@Override
 	@Transactional
-	public Empresa criarEmpresa(EmpresaDTO empresaDTO) {
+	public EmpresaDTO criarEmpresa(EmpresaInputDTO empresaInputDTO) {
 		// 1. Converte o DTO de Endereço para a entidade e salva
-        Endereco novoEndereco = enderecoService.criarEndereco(empresaDTO.getEndereco());
+        Endereco novoEndereco = enderecoService.criarEndereco(empresaInputDTO.getEndereco());
 
         // 2. Converte o DTO de Empresa para a entidade Empresa
         Empresa empresa = new Empresa();
-        empresa.setCnpj(empresaDTO.getCnpj());
-        empresa.setNomeFantasia(empresaDTO.getNomeFantasia());
+        empresa.setCnpj(empresaInputDTO.getCnpj());
+        empresa.setNomeFantasia(empresaInputDTO.getNomeFantasia());
         empresa.setEndereco(novoEndereco);
 
         // 3. Salva a nova empresa e retorna
-        return empresaRepository.save(empresa);
+        return this.converterParaRespostaDTO(empresaRepository.save(empresa));
 	}
 
 	@Override
@@ -62,23 +64,26 @@ public class EmpresaService implements IEmpresaService {
 
 	@Override
 	@Transactional
-	public Empresa atualizarEmpresa(UUID id, EmpresaDTO empresaDTO) {
+	public EmpresaDTO atualizarEmpresa(UUID id, EmpresaInputDTO empresaInputDTO) {
 		Empresa empresaExistente = buscarEmpresaPorId(id);
 
         // 1. Atualiza o endereço
-        enderecoService.atualizarEndereco(empresaExistente.getEndereco().getId(), empresaDTO.getEndereco());
+        enderecoService.atualizarEndereco(empresaExistente.getEndereco().getId(), empresaInputDTO.getEndereco());
 
         // 2. Atualiza os dados da empresa
-        empresaExistente.setCnpj(empresaDTO.getCnpj());
-        empresaExistente.setNomeFantasia(empresaDTO.getNomeFantasia());
+        empresaExistente.setCnpj(empresaInputDTO.getCnpj());
+        empresaExistente.setNomeFantasia(empresaInputDTO.getNomeFantasia());
 
         // 3. Salva a empresa atualizada e retorna
-        return empresaRepository.save(empresaExistente);
+        return this.converterParaRespostaDTO(empresaRepository.save(empresaExistente));
 	}
 
 	@Override
 	public void deletarEmpresa(UUID id) {
 		empresaRepository.deleteById(id);
 	}
-
+	
+	private EmpresaDTO converterParaRespostaDTO(Empresa empresa) {
+		return new EmpresaDTO(empresa);
+	}
 }

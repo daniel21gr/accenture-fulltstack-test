@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,17 +24,17 @@ public class Empresa {
     @NotBlank(message = "O nome fantasia é obrigatório.")
     private String nomeFantasia;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco", nullable = false)
     private Endereco endereco;
     
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
         name = "empresa_fornecedor",
         joinColumns = @JoinColumn(name = "id_empresa"),
         inverseJoinColumns = @JoinColumn(name = "id_fornecedor")
     )
-    private List<Fornecedor> fornecedores;
+    private List<Fornecedor> fornecedores = new ArrayList<Fornecedor>();
 
     // Getters e Setters
     public UUID getId() {

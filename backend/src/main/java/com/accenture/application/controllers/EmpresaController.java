@@ -1,6 +1,8 @@
 package com.accenture.application.controllers;
 
 import com.accenture.application.domain.dtos.EmpresaDTO;
+import com.accenture.application.domain.dtos.EmpresaInputDTO;
+import com.accenture.application.domain.dtos.EmpresaInputDTO;
 import com.accenture.application.domain.models.Empresa;
 import com.accenture.application.services.impls.EmpresaService;
 
@@ -35,8 +37,8 @@ public class EmpresaController {
     	summary = "Cria uma nova empresa",
 	    description = "Cria uma nova empresa com as informações fornecidas e a salva no banco de dados."
 	)
-    public ResponseEntity<Empresa> criarEmpresa(@RequestBody @Valid EmpresaDTO empresaDTO) {
-        Empresa novaEmpresa = empresaService.criarEmpresa(empresaDTO);
+    public ResponseEntity<EmpresaDTO> criarEmpresa(@RequestBody @Valid EmpresaInputDTO empresaInputDTO) {
+        EmpresaDTO novaEmpresa = empresaService.criarEmpresa(empresaInputDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaEmpresa);
     }
 
@@ -65,8 +67,8 @@ public class EmpresaController {
     	summary = "Atualiza uma empresa existente",
     	description = "Atualiza todas as informações de uma empresa com base no seu ID."
     )
-    public ResponseEntity<Empresa> atualizarEmpresa(@PathVariable UUID id, @RequestBody @Valid EmpresaDTO empresaDTO) {
-        Empresa empresaAtualizada = empresaService.atualizarEmpresa(id, empresaDTO);
+    public ResponseEntity<EmpresaDTO> atualizarEmpresa(@PathVariable UUID id, @RequestBody @Valid EmpresaInputDTO empresaInputDTO) {
+        EmpresaDTO empresaAtualizada = empresaService.atualizarEmpresa(id, empresaInputDTO);
         return ResponseEntity.ok(empresaAtualizada);
     }
 

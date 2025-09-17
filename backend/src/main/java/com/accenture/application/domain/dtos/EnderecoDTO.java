@@ -1,5 +1,7 @@
 package com.accenture.application.domain.dtos;
 
+import com.accenture.application.domain.models.Endereco;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -28,6 +30,21 @@ public class EnderecoDTO {
 
     @NotBlank(message = "O estado é obrigatório.")
     private String estado;
+    
+    // Construtor padrão (necessário para o JPA)
+    public EnderecoDTO() {
+    }
+
+    // Novo construtor para criar a entidade a partir do DTO
+    public EnderecoDTO(Endereco endereco) {
+        this.cep = endereco.getCep();
+        this.rua = endereco.getRua();
+        this.numero = endereco.getNumero();
+        this.bairro = endereco.getBairro();
+        this.cidade = endereco.getCidade();
+        this.uf = endereco.getUf();
+        this.estado = endereco.getEstado();
+    }
 
     // Getters e Setters
     public String getCep() {

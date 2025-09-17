@@ -1,9 +1,12 @@
 package com.accenture.application.domain.dtos;
 
+import com.accenture.application.domain.models.Fornecedor;
 import com.accenture.application.domain.models.TipoFornecedor;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -30,6 +33,28 @@ public class FornecedorBasicoDTO {
 
     @NotNull(message = "O endereço é obrigatório.")
     private EnderecoDTO endereco;
+    
+ // Construtor principal
+ 	public FornecedorBasicoDTO(UUID id, String documento, String nome, String email, String rg, Date dataNascimento, EnderecoDTO endereco) {
+ 		this.id = id;
+ 		this.nome = nome;
+ 		this.documento = documento;
+ 		this.email = email;
+ 		this.rg = rg;
+ 		this.dataNascimento = dataNascimento;
+ 		this.endereco = endereco;
+ 	}
+
+ 	// Construtor de conveniência
+ 	public FornecedorBasicoDTO(Fornecedor fornecedor) {
+ 		this.id = fornecedor.getId();
+ 		this.nome = fornecedor.getNome();
+ 		this.documento = fornecedor.getDocumento();
+ 		this.email = fornecedor.getEmail();
+ 		this.rg = fornecedor.getRg();
+ 		this.dataNascimento = fornecedor.getDataNascimento();
+ 		this.endereco = new EnderecoDTO(fornecedor.getEndereco());
+ 	}
 
     // Getters e Setters
     public UUID getId() {
