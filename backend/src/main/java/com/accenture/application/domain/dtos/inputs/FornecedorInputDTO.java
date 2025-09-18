@@ -1,5 +1,6 @@
 package com.accenture.application.domain.dtos.inputs;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 import com.accenture.application.domain.dtos.responses.EnderecoDTO;
@@ -32,7 +33,7 @@ public class FornecedorInputDTO {
 
     private String rg;
 
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
 
     @NotNull(message = "O endereço é obrigatório.")
     private EnderecoDTO endereco;
@@ -86,11 +87,11 @@ public class FornecedorInputDTO {
         this.rg = rg;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

@@ -6,6 +6,8 @@ import com.accenture.application.domain.models.TipoFornecedor;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -30,7 +32,7 @@ public class FornecedorDTO {
 
     private String rg;
 
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
 
     @NotNull(message = "O endereço é obrigatório.")
     private EnderecoDTO endereco;
@@ -39,7 +41,7 @@ public class FornecedorDTO {
     
  // Construtor principal
  	public FornecedorDTO(UUID id, String documento, TipoFornecedor tipoFornecedor, String nome, String email, String rg,
- 			Date dataNascimento, EnderecoDTO endereco, List<EmpresaBasicoDTO> empresas) {
+ 			LocalDate dataNascimento, EnderecoDTO endereco, List<EmpresaBasicoDTO> empresas) {
  		this.id = id;
  		this.documento = documento;
  		this.tipoFornecedor = tipoFornecedor;
@@ -113,11 +115,11 @@ public class FornecedorDTO {
         this.rg = rg;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

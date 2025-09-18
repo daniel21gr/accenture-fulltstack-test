@@ -5,6 +5,7 @@ import com.accenture.application.domain.dtos.responses.FornecedorDTO;
 import com.accenture.application.domain.models.Empresa;
 import com.accenture.application.domain.models.Endereco;
 import com.accenture.application.domain.models.Fornecedor;
+import com.accenture.application.domain.models.TipoFornecedor;
 import com.accenture.application.domain.repositories.EmpresaRepository;
 import com.accenture.application.domain.repositories.FornecedorRepository;
 import com.accenture.application.services.interfaces.IFornecedorService;
@@ -17,7 +18,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -98,6 +104,36 @@ public class FornecedorService implements IFornecedorService {
         fornecedorRepository.deleteById(id);
     }
     
+    @Override
+    @Transactional
+    public FornecedorDTO vincularFornecedorAEmpresa(UUID fornecedorId, UUID empresaId) {
+        Fornecedor fornecedor = this.obterFornecedorPorId(fornecedorId);
+        Empresa empresa = empresaRepository.findById(empresaId)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empresa não encontrada com ID: " + empresaId));
+
+        // Adiciona a empresa ao fornecedor, se ainda não estiver associada
+        if (this.validarAssociacaoComEmpresaPR(fornecedor, empresa) &&
+        		!fornecedor.getEmpresas().contains(empresa)) {
+            fornecedor.getEmpresas().add(empresa);
+            empresa.getFornecedores().add(fornecedor);
+        }
+
+        return this.converterParaRespostaDTO(fornecedorRepository.save(fornecedor));
+    }
+
+    @Override
+    @Transactional
+    public Fornecedor desvincularFornecedorDeEmpresa(UUID fornecedorId, UUID empresaId) {
+        Fornecedor fornecedor = this.obterFornecedorPorId(fornecedorId);
+        Empresa empresa = empresaRepository.findById(empresaId)
+            .orElseThrow(() -> new NoSuchElementException("Empresa não encontrada com ID: " + empresaId));
+
+        fornecedor.getEmpresas().remove(empresa);
+        empresa.getFornecedores().remove(fornecedor);
+        
+        return fornecedorRepository.save(fornecedor);
+    }
+    
     private String limparDocumentoCPF(String documento) {
     	if (documento != null) {
     		return documento.replaceAll("[^0-9]", "");
@@ -107,10 +143,30 @@ public class FornecedorService implements IFornecedorService {
     
     private Fornecedor obterFornecedorPorId(UUID id) {
     	return fornecedorRepository.findById(id)
-    			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fornecedor não encontrado com ID: " + id));
+			.orElseThrow(() -> new NoSuchElementException("Fornecedor não encontrado com ID: " + id));
     }
     
     private FornecedorDTO converterParaRespostaDTO(Fornecedor fornecedor) {
     	return new FornecedorDTO(fornecedor);
+    }
+    
+    // Método que implementa a regra de negócio do Paraná
+    private boolean validarAssociacaoComEmpresaPR(Fornecedor fornecedor, Empresa empresa) {
+    	if (fornecedor.getTipoFornecedor() != TipoFornecedor.PESSOA_FISICA) {
+    		return true;
+    	}
+    	
+    	if (!"PR".equalsIgnoreCase(empresa.getEndereco().getUf())) {
+    		return true;
+    	}
+    	
+    	LocalDate dataNascimentoLocal = fornecedor.getDataNascimento();
+        Integer idade = Period.between(dataNascimentoLocal, LocalDate.now()).getYears();
+
+        if (idade < 18) {
+            throw new NoSuchElementException("Não é permitido cadastrar fornecedor menor de idade para empresas do Paraná.");
+        }
+        
+        return true;
     }
 }

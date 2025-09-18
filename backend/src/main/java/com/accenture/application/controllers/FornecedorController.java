@@ -79,4 +79,24 @@ public class FornecedorController {
         fornecedorService.deletarFornecedor(id);
         return ResponseEntity.noContent().build();
     }
+    
+    @PostMapping("/{fornecedorId}/empresas/{empresaId}")
+    @Operation(
+        summary = "Vincula uma empresa a um fornecedor",
+        description = "Associa uma empresa existente a um fornecedor existente."
+    )
+    public ResponseEntity<FornecedorDTO> vincularEmpresa(@PathVariable UUID fornecedorId, @PathVariable UUID empresaId) {
+        FornecedorDTO fornecedorAtualizado = fornecedorService.vincularFornecedorAEmpresa(fornecedorId, empresaId);
+        return ResponseEntity.ok(fornecedorAtualizado);
+    }
+    
+    @DeleteMapping("/{fornecedorId}/empresas/{empresaId}")
+    @Operation(
+        summary = "Desvincula uma empresa de um fornecedor",
+        description = "Remove a associação de uma empresa a um fornecedor."
+    )
+    public ResponseEntity<Void> desvincularEmpresa(@PathVariable UUID fornecedorId, @PathVariable UUID empresaId) {
+        fornecedorService.desvincularFornecedorDeEmpresa(fornecedorId, empresaId);
+        return ResponseEntity.noContent().build();
+    }
 }

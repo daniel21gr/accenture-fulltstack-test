@@ -30,13 +30,13 @@ public class FornecedorBasicoDTO {
 
     private String rg;
 
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
 
     @NotNull(message = "O endereço é obrigatório.")
     private EnderecoDTO endereco;
     
  // Construtor principal
- 	public FornecedorBasicoDTO(UUID id, String documento, String nome, String email, String rg, Date dataNascimento, EnderecoDTO endereco) {
+ 	public FornecedorBasicoDTO(UUID id, String documento, String nome, String email, String rg, LocalDate dataNascimento, EnderecoDTO endereco) {
  		this.id = id;
  		this.nome = nome;
  		this.documento = documento;
@@ -106,11 +106,11 @@ public class FornecedorBasicoDTO {
         this.rg = rg;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

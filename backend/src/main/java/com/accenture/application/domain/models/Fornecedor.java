@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,14 +40,14 @@ public class Fornecedor {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "data_nascimento", nullable = true)
-    private Date dataNascimento;
+    private LocalDate dataNascimento;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco", nullable = false)
     private Endereco endereco;
     
     @ManyToMany(mappedBy = "fornecedores", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    private List<Empresa> empresas = new ArrayList<Empresa>();
+    private List<Empresa> empresas = new ArrayList<>();
 
     // Getters e Setters
     public UUID getId() {
@@ -97,11 +98,11 @@ public class Fornecedor {
         this.rg = rg;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
@@ -118,6 +119,6 @@ public class Fornecedor {
     }
 
     public void setEmpresas(List<Empresa> empresas) {
-        this.empresas = empresas;
+        this.empresas = new ArrayList<>(empresas);
     }
 }

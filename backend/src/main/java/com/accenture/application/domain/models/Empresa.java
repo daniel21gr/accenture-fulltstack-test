@@ -34,7 +34,7 @@ public class Empresa {
         joinColumns = @JoinColumn(name = "id_empresa"),
         inverseJoinColumns = @JoinColumn(name = "id_fornecedor")
     )
-    private List<Fornecedor> fornecedores = new ArrayList<Fornecedor>();
+    private List<Fornecedor> fornecedores = new ArrayList<>();
 
     // Getters e Setters
     public UUID getId() {
@@ -74,6 +74,6 @@ public class Empresa {
     }
 
     public void setFornecedores(List<Fornecedor> fornecedores) {
-        this.fornecedores = fornecedores;
+        this.fornecedores = new ArrayList<>(fornecedores);
     }
 }
