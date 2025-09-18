@@ -40,10 +40,13 @@ public class FornecedorService implements IFornecedorService {
     public FornecedorDTO criarFornecedor(FornecedorInputDTO fornecedorInputDTO) {
         // 1. Usa o EnderecoService para criar o Endereco
         Endereco novoEndereco = enderecoService.criarEndereco(fornecedorInputDTO.getEndereco());
+        
+        // 2. Remove a máscara do documento
+        String documentoLimpo = this.limparDocumentoCPF(fornecedorInputDTO.getDocumento());
 
-        // 2. Converte o DTO para a entidade Fornecedor
+        // 3. Converte o DTO para a entidade Fornecedor
         Fornecedor fornecedor = new Fornecedor();
-        fornecedor.setDocumento(fornecedorInputDTO.getDocumento());
+        fornecedor.setDocumento(documentoLimpo);
         fornecedor.setTipoFornecedor(fornecedorInputDTO.getTipoFornecedor());
         fornecedor.setNome(fornecedorInputDTO.getNome());
         fornecedor.setEmail(fornecedorInputDTO.getEmail());
@@ -51,7 +54,7 @@ public class FornecedorService implements IFornecedorService {
         fornecedor.setDataNascimento(fornecedorInputDTO.getDataNascimento());
         fornecedor.setEndereco(novoEndereco);
 
-        // 3. Salva o fornecedor e retorna
+        // 4. Salva o fornecedor e retorna
         return this.converterParaRespostaDTO(fornecedorRepository.save(fornecedor));
     }
 
@@ -74,9 +77,12 @@ public class FornecedorService implements IFornecedorService {
 
         // 1. Atualiza o endereço usando o EnderecoService
         enderecoService.atualizarEndereco(fornecedorExistente.getEndereco().getId(), fornecedorInputDTO.getEndereco());
+        
+        // 2. Remove a máscara do documento
+        String documentoLimpo = this.limparDocumentoCPF(fornecedorInputDTO.getDocumento());
 
         // 2. Atualiza os dados do fornecedor
-        fornecedorExistente.setDocumento(fornecedorInputDTO.getDocumento());
+        fornecedorExistente.setDocumento(documentoLimpo);
         fornecedorExistente.setTipoFornecedor(fornecedorInputDTO.getTipoFornecedor());
         fornecedorExistente.setNome(fornecedorInputDTO.getNome());
         fornecedorExistente.setEmail(fornecedorInputDTO.getEmail());
@@ -90,6 +96,13 @@ public class FornecedorService implements IFornecedorService {
     @Override
     public void deletarFornecedor(UUID id) {
         fornecedorRepository.deleteById(id);
+    }
+    
+    private String limparDocumentoCPF(String documento) {
+    	if (documento != null) {
+    		return documento.replaceAll("[^0-9]", "");
+    	}
+    	return null;
     }
     
     private Fornecedor obterFornecedorPorId(UUID id) {

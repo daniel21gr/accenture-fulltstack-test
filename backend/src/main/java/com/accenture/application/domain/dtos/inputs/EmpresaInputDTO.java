@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.accenture.application.domain.dtos.responses.EnderecoDTO;
+import com.accenture.application.validations.interfaces.IValidarCNPJ;
 
 public class EmpresaInputDTO {
 
@@ -14,6 +15,7 @@ public class EmpresaInputDTO {
 
     @NotBlank(message = "O CNPJ é obrigatório.")
     @Size(min = 14, max = 14, message = "O CNPJ deve ter 14 dígitos.")
+    @IValidarCNPJ
     private String cnpj;
 
     @NotBlank(message = "O nome fantasia é obrigatório.")

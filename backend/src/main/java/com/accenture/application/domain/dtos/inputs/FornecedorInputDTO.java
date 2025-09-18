@@ -4,11 +4,15 @@ import java.util.Date;
 import java.util.UUID;
 import com.accenture.application.domain.dtos.responses.EnderecoDTO;
 import com.accenture.application.domain.models.TipoFornecedor;
+import com.accenture.application.validations.interfaces.IValidarFornecedorDocumento;
+import com.accenture.application.validations.interfaces.IValidarFornecedorPF;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+@IValidarFornecedorDocumento // Validação condicional de documento
+@IValidarFornecedorPF // Validação de campos de Pessoa Física
 public class FornecedorInputDTO {
 
 	private UUID id;
