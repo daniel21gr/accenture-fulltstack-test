@@ -34,7 +34,7 @@ public class ValidarCPFValidator implements ConstraintValidator<IValidarCPF, Str
         // Lógica de validação dos dígitos verificadores
         try {
             int d1, d2;
-            int digito1, digito2, resto;
+            int digito1, digito2;
             int sum = 0;
             String tempCPF;
             

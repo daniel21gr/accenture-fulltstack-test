@@ -3,7 +3,6 @@ package com.accenture.application.controllers;
 import com.accenture.application.domain.dtos.filters.FornecedorFiltroDTO;
 import com.accenture.application.domain.dtos.inputs.FornecedorInputDTO;
 import com.accenture.application.domain.dtos.responses.FornecedorDTO;
-import com.accenture.application.domain.models.Fornecedor;
 import com.accenture.application.services.impls.FornecedorService;
 
 import io.swagger.v3.oas.annotations.Operation;

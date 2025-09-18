@@ -19,7 +19,7 @@ public class ValidarFornecedorDocumentoValidator implements ConstraintValidator<
     @Override
     public boolean isValid(FornecedorInputDTO fornecedor, ConstraintValidatorContext context) {
         if (!StringUtils.hasText(fornecedor.getDocumento())) {
-            return true; // A validação de @NotBlank já cuida disso
+            return true;
         }
 
         if (fornecedor.getTipoFornecedor() == TipoFornecedor.PESSOA_FISICA) {

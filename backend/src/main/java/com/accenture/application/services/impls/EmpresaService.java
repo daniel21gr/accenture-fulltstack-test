@@ -1,24 +1,18 @@
 package com.accenture.application.services.impls;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.accenture.application.domain.dtos.inputs.EmpresaInputDTO;
 import com.accenture.application.domain.dtos.responses.EmpresaDTO;
 import com.accenture.application.domain.models.Empresa;
 import com.accenture.application.domain.models.Endereco;
-import com.accenture.application.domain.models.Fornecedor;
 import com.accenture.application.domain.repositories.EmpresaRepository;
-import com.accenture.application.domain.repositories.EnderecoRepository;
-import com.accenture.application.domain.repositories.FornecedorRepository;
 import com.accenture.application.services.interfaces.IEmpresaService;
 
 import jakarta.transaction.Transactional;
@@ -28,13 +22,11 @@ public class EmpresaService implements IEmpresaService {
 	
 	private final EmpresaRepository empresaRepository;
     private final EnderecoService enderecoService;
-    private final FornecedorRepository fornecedorRepository;
 	
 	@Autowired
-    public EmpresaService(EmpresaRepository empresaRepository, EnderecoService enderecoService, FornecedorRepository fornecedorRepository) {
+    public EmpresaService(EmpresaRepository empresaRepository, EnderecoService enderecoService) {
         this.empresaRepository = empresaRepository;
         this.enderecoService = enderecoService;
-        this.fornecedorRepository = fornecedorRepository;
     }
 
 	@Override
@@ -89,7 +81,7 @@ public class EmpresaService implements IEmpresaService {
 	
 	private Empresa obterEmpresaPorId(UUID id) {
 		return empresaRepository.findById(id)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empresa não encontrado com ID: " + id));
+				.orElseThrow(() -> new NoSuchElementException("Empresa não encontrado com ID: " + id));
 	}
 	
 	private EmpresaDTO converterParaRespostaDTO(Empresa empresa) {

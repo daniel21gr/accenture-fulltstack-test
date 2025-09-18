@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -39,7 +38,7 @@ public class FornecedorDTO {
 
     private List<EmpresaBasicoDTO> empresas;
     
- // Construtor principal
+    // Construtor principal
  	public FornecedorDTO(UUID id, String documento, TipoFornecedor tipoFornecedor, String nome, String email, String rg,
  			LocalDate dataNascimento, EnderecoDTO endereco, List<EmpresaBasicoDTO> empresas) {
  		this.id = id;

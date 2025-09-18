@@ -8,7 +8,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
 public class FornecedorBasicoDTO {
@@ -35,7 +34,7 @@ public class FornecedorBasicoDTO {
     @NotNull(message = "O endereço é obrigatório.")
     private EnderecoDTO endereco;
     
- // Construtor principal
+    // Construtor principal
  	public FornecedorBasicoDTO(UUID id, String documento, String nome, String email, String rg, LocalDate dataNascimento, EnderecoDTO endereco) {
  		this.id = id;
  		this.nome = nome;

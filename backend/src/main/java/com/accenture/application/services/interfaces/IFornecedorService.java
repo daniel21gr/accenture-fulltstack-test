@@ -4,14 +4,10 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.accenture.application.domain.dtos.filters.FornecedorFiltroDTO;
 import com.accenture.application.domain.dtos.inputs.FornecedorInputDTO;
 import com.accenture.application.domain.dtos.responses.FornecedorDTO;
-import com.accenture.application.domain.models.Empresa;
 import com.accenture.application.domain.models.Fornecedor;
 
 public interface IFornecedorService {

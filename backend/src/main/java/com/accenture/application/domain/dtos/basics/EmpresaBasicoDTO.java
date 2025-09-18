@@ -6,7 +6,6 @@ import jakarta.validation.constraints.Size;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import com.accenture.application.domain.dtos.responses.EnderecoDTO;
 import com.accenture.application.domain.models.Empresa;
@@ -25,7 +24,7 @@ public class EmpresaBasicoDTO {
     @NotNull(message = "O endereço é obrigatório.")
     private EnderecoDTO endereco;
     
- // Construtor principal
+    // Construtor principal
  	public EmpresaBasicoDTO(UUID id, String cnpj, String nomeFantasia, EnderecoDTO endereco,
  			List<FornecedorBasicoDTO> fornecedores) {
  		this.id = id;

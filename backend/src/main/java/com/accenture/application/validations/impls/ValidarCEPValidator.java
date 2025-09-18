@@ -12,7 +12,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component // O Spring gerencia esse validador
+@Component
 public class ValidarCEPValidator implements ConstraintValidator<IValidarCEP, String> {
 
     @Autowired

@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 import com.accenture.application.domain.dtos.inputs.EmpresaInputDTO;
 import com.accenture.application.domain.dtos.responses.EmpresaDTO;
-import com.accenture.application.domain.models.Empresa;
 
 public interface IEmpresaService {
 	EmpresaDTO criarEmpresa(EmpresaInputDTO empresaInputDTO);

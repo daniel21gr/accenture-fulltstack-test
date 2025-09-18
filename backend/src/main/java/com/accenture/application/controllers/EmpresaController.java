@@ -2,7 +2,6 @@ package com.accenture.application.controllers;
 
 import com.accenture.application.domain.dtos.inputs.EmpresaInputDTO;
 import com.accenture.application.domain.dtos.responses.EmpresaDTO;
-import com.accenture.application.domain.models.Empresa;
 import com.accenture.application.services.impls.EmpresaService;
 
 import io.swagger.v3.oas.annotations.Operation;

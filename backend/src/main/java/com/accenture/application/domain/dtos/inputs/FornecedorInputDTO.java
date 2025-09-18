@@ -1,11 +1,9 @@
 package com.accenture.application.domain.dtos.inputs;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 import com.accenture.application.domain.dtos.responses.EnderecoDTO;
 import com.accenture.application.domain.models.TipoFornecedor;
-import com.accenture.application.validations.interfaces.IValidarCEP;
 import com.accenture.application.validations.interfaces.IValidarFornecedorDocumento;
 import com.accenture.application.validations.interfaces.IValidarFornecedorPF;
 
