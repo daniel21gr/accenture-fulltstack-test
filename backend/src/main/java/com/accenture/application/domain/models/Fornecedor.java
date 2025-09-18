@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -40,12 +41,12 @@ public class Fornecedor {
     @Column(name = "data_nascimento", nullable = true)
     private Date dataNascimento;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco", nullable = false)
     private Endereco endereco;
     
-    @ManyToMany(mappedBy = "fornecedores", fetch = FetchType.LAZY)
-    private List<Empresa> empresas;
+    @ManyToMany(mappedBy = "fornecedores", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    private List<Empresa> empresas = new ArrayList<Empresa>();
 
     // Getters e Setters
     public UUID getId() {

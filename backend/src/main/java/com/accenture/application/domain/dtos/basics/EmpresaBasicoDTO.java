@@ -3,9 +3,13 @@ package com.accenture.application.domain.dtos.basics;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.accenture.application.domain.dtos.responses.EnderecoDTO;
+import com.accenture.application.domain.models.Empresa;
 
 public class EmpresaBasicoDTO {
 
@@ -20,6 +24,23 @@ public class EmpresaBasicoDTO {
 
     @NotNull(message = "O endereço é obrigatório.")
     private EnderecoDTO endereco;
+    
+ // Construtor principal
+ 	public EmpresaBasicoDTO(UUID id, String cnpj, String nomeFantasia, EnderecoDTO endereco,
+ 			List<FornecedorBasicoDTO> fornecedores) {
+ 		this.id = id;
+ 		this.cnpj = cnpj;
+ 		this.nomeFantasia = nomeFantasia;
+ 		this.endereco = endereco;
+ 	}
+
+ 	// Construtor de conveniência
+ 	public EmpresaBasicoDTO(Empresa empresa) {
+ 		this.id = empresa.getId();
+ 		this.cnpj = empresa.getCnpj();
+ 		this.nomeFantasia = empresa.getNomeFantasia();
+ 		this.endereco = new EnderecoDTO(empresa.getEndereco());
+ 	}
 
     // Getters e Setters
     public UUID getId() {

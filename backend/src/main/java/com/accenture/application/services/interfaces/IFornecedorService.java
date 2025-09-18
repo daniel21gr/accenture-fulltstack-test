@@ -1,0 +1,25 @@
+package com.accenture.application.services.interfaces;
+
+import java.util.UUID;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.accenture.application.domain.dtos.inputs.FornecedorInputDTO;
+import com.accenture.application.domain.dtos.responses.FornecedorDTO;
+import com.accenture.application.domain.models.Fornecedor;
+
+public interface IFornecedorService {
+
+	FornecedorDTO criarFornecedor(FornecedorInputDTO fornecedorInputDTO);
+
+	Fornecedor buscarFornecedorPorId(UUID id);
+
+	Page<Fornecedor> listarFornecedores(Pageable pageable);
+
+	FornecedorDTO atualizarFornecedor(UUID id, FornecedorInputDTO fornecedorInputDTO);
+
+	void deletarFornecedor(UUID id);
+
+}

@@ -1,19 +1,17 @@
-package com.accenture.application.domain.dtos.responses;
+package com.accenture.application.domain.dtos.inputs;
 
-import com.accenture.application.domain.dtos.basics.EmpresaBasicoDTO;
-import com.accenture.application.domain.models.Fornecedor;
+import java.util.Date;
+import java.util.UUID;
+import com.accenture.application.domain.dtos.responses.EnderecoDTO;
 import com.accenture.application.domain.models.TipoFornecedor;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
-public class FornecedorDTO {
+public class FornecedorInputDTO {
 
-    private UUID id;
+	private UUID id;
 
     @NotBlank(message = "O documento é obrigatório.")
     private String documento;
@@ -34,35 +32,6 @@ public class FornecedorDTO {
 
     @NotNull(message = "O endereço é obrigatório.")
     private EnderecoDTO endereco;
-
-    private List<EmpresaBasicoDTO> empresas;
-    
- // Construtor principal
- 	public FornecedorDTO(UUID id, String documento, TipoFornecedor tipoFornecedor, String nome, String email, String rg,
- 			Date dataNascimento, EnderecoDTO endereco, List<EmpresaBasicoDTO> empresas) {
- 		this.id = id;
- 		this.documento = documento;
- 		this.tipoFornecedor = tipoFornecedor;
- 		this.nome = nome;
- 		this.email = email;
- 		this.rg = rg;
- 		this.dataNascimento = dataNascimento;
- 		this.endereco = endereco;
- 		this.empresas = empresas;
- 	}
-
- 	// Construtor de conveniência
- 	public FornecedorDTO(Fornecedor fornecedor) {
- 		this.id = fornecedor.getId();
- 		this.nome = fornecedor.getNome();
- 		this.documento = fornecedor.getDocumento();
- 		this.tipoFornecedor = fornecedor.getTipoFornecedor();
- 		this.email = fornecedor.getEmail();
- 		this.rg = fornecedor.getRg();
- 		this.dataNascimento = fornecedor.getDataNascimento();
- 		this.endereco = new EnderecoDTO(fornecedor.getEndereco());
- 		this.empresas = fornecedor.getEmpresas().stream().map(EmpresaBasicoDTO::new).collect(Collectors.toList());
- 	}
 
     // Getters e Setters
     public UUID getId() {
@@ -127,13 +96,5 @@ public class FornecedorDTO {
 
     public void setEndereco(EnderecoDTO endereco) {
         this.endereco = endereco;
-    }
-
-    public List<EmpresaBasicoDTO> getEmpresas() {
-        return empresas;
-    }
-
-    public void setEmpresas(List<EmpresaBasicoDTO> empresas) {
-        this.empresas = empresas;
     }
 }

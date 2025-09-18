@@ -7,7 +7,9 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.accenture.application.domain.dtos.inputs.EmpresaInputDTO;
 import com.accenture.application.domain.dtos.responses.EmpresaDTO;
@@ -53,7 +55,7 @@ public class EmpresaService implements IEmpresaService {
 
 	@Override
 	public Empresa buscarEmpresaPorId(UUID id) {
-		return empresaRepository.findById(id).orElseThrow(NoSuchElementException::new);
+		return empresaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empresa não encontrado com ID: " + id));
 	}
 
 	@Override
