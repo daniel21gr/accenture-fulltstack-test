@@ -28,7 +28,7 @@ public class ApplicationExceptionHandler {
     
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException ex) {
-        String errorMessage = "O recurso solicitado não foi encontrado.";
+        String errorMessage = ex.getMessage();
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
 }
