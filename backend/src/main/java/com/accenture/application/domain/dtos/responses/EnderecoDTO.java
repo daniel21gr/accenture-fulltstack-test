@@ -1,6 +1,7 @@
 package com.accenture.application.domain.dtos.responses;
 
 import com.accenture.application.domain.models.Endereco;
+import com.accenture.application.validations.interfaces.IValidarCEP;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -10,6 +11,7 @@ public class EnderecoDTO {
 
     @NotBlank(message = "O CEP é obrigatório.")
     @Size(min = 8, max = 8, message = "O CEP deve ter 8 dígitos.")
+    @IValidarCEP
     private String cep;
 
     @NotBlank(message = "A rua é obrigatória.")

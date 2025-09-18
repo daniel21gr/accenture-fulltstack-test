@@ -5,9 +5,11 @@ import java.util.Date;
 import java.util.UUID;
 import com.accenture.application.domain.dtos.responses.EnderecoDTO;
 import com.accenture.application.domain.models.TipoFornecedor;
+import com.accenture.application.validations.interfaces.IValidarCEP;
 import com.accenture.application.validations.interfaces.IValidarFornecedorDocumento;
 import com.accenture.application.validations.interfaces.IValidarFornecedorPF;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -36,6 +38,7 @@ public class FornecedorInputDTO {
     private LocalDate dataNascimento;
 
     @NotNull(message = "O endereço é obrigatório.")
+    @Valid
     private EnderecoDTO endereco;
 
     // Getters e Setters
