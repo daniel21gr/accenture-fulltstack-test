@@ -1,5 +1,6 @@
 package com.accenture.application.controllers;
 
+import com.accenture.application.domain.dtos.filters.FornecedorFiltroDTO;
 import com.accenture.application.domain.dtos.inputs.FornecedorInputDTO;
 import com.accenture.application.domain.dtos.responses.FornecedorDTO;
 import com.accenture.application.domain.models.Fornecedor;
@@ -55,8 +56,8 @@ public class FornecedorController {
         summary = "Lista todos os fornecedores de forma paginada",
         description = "Retorna uma lista de fornecedores, permitindo paginação para lidar com grandes volumes de dados."
     )
-    public ResponseEntity<Page<FornecedorDTO>> listarFornecedores(@ParameterObject Pageable pageable) {
-        Page<FornecedorDTO> fornecedoresDTO = fornecedorService.listarFornecedores(pageable);
+    public ResponseEntity<Page<FornecedorDTO>> listarFornecedores(@ParameterObject FornecedorFiltroDTO filtro, @ParameterObject Pageable pageable) {
+        Page<FornecedorDTO> fornecedoresDTO = fornecedorService.listarFornecedores(filtro, pageable);
         return ResponseEntity.ok(fornecedoresDTO);
     }
 

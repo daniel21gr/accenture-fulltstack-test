@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.accenture.application.domain.dtos.filters.FornecedorFiltroDTO;
 import com.accenture.application.domain.dtos.inputs.FornecedorInputDTO;
 import com.accenture.application.domain.dtos.responses.FornecedorDTO;
 import com.accenture.application.domain.models.Empresa;
@@ -19,7 +20,7 @@ public interface IFornecedorService {
 
 	FornecedorDTO buscarFornecedorPorId(UUID id);
 
-	Page<FornecedorDTO> listarFornecedores(Pageable pageable);
+	Page<FornecedorDTO> listarFornecedores(FornecedorFiltroDTO filtro, Pageable pageable);
 
 	FornecedorDTO atualizarFornecedor(UUID id, FornecedorInputDTO fornecedorInputDTO);
 

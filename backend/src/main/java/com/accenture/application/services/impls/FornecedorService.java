@@ -1,5 +1,6 @@
 package com.accenture.application.services.impls;
 
+import com.accenture.application.domain.dtos.filters.FornecedorFiltroDTO;
 import com.accenture.application.domain.dtos.inputs.FornecedorInputDTO;
 import com.accenture.application.domain.dtos.responses.FornecedorDTO;
 import com.accenture.application.domain.models.Empresa;
@@ -8,11 +9,13 @@ import com.accenture.application.domain.models.Fornecedor;
 import com.accenture.application.domain.models.TipoFornecedor;
 import com.accenture.application.domain.repositories.EmpresaRepository;
 import com.accenture.application.domain.repositories.FornecedorRepository;
+import com.accenture.application.domain.specifications.FornecedorSpecification;
 import com.accenture.application.services.interfaces.IFornecedorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,8 +74,9 @@ public class FornecedorService implements IFornecedorService {
     }
 
     @Override
-    public Page<FornecedorDTO> listarFornecedores(Pageable pageable) {
-    	Page<Fornecedor> fornecedores = fornecedorRepository.findAll(pageable);
+    public Page<FornecedorDTO> listarFornecedores(FornecedorFiltroDTO filtro, Pageable pageable) {
+    	Specification<Fornecedor> spec = FornecedorSpecification.byFilter(filtro);
+    	Page<Fornecedor> fornecedores = fornecedorRepository.findAll(spec, pageable);
         return fornecedores.map(FornecedorDTO::new);
     }
 
