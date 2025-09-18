@@ -54,19 +54,22 @@ public class EmpresaService implements IEmpresaService {
 	}
 
 	@Override
-	public Empresa buscarEmpresaPorId(UUID id) {
-		return empresaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empresa não encontrado com ID: " + id));
+	public EmpresaDTO buscarEmpresaPorId(UUID id) {
+		Empresa empresa = this.obterEmpresaPorId(id);
+		return new EmpresaDTO(empresa);
 	}
 
 	@Override
-	public Page<Empresa> listarEmpresas(Pageable pageable) {
-		return empresaRepository.findAll(pageable);
+	public Page<EmpresaDTO> listarEmpresas(Pageable pageable) {
+		Page<Empresa> empresas = empresaRepository.findAll(pageable);
+		
+		return empresas.map(EmpresaDTO::new);
 	}
 
 	@Override
 	@Transactional
 	public EmpresaDTO atualizarEmpresa(UUID id, EmpresaInputDTO empresaInputDTO) {
-		Empresa empresaExistente = buscarEmpresaPorId(id);
+		Empresa empresaExistente = this.obterEmpresaPorId(id);
 
         // 1. Atualiza o endereço
         enderecoService.atualizarEndereco(empresaExistente.getEndereco().getId(), empresaInputDTO.getEndereco());
@@ -82,6 +85,11 @@ public class EmpresaService implements IEmpresaService {
 	@Override
 	public void deletarEmpresa(UUID id) {
 		empresaRepository.deleteById(id);
+	}
+	
+	private Empresa obterEmpresaPorId(UUID id) {
+		return empresaRepository.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empresa não encontrado com ID: " + id));
 	}
 	
 	private EmpresaDTO converterParaRespostaDTO(Empresa empresa) {

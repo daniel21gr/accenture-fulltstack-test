@@ -45,9 +45,9 @@ public class FornecedorController {
         summary = "Busca um fornecedor por ID",
         description = "Retorna um fornecedor específico com base no seu ID único."
     )
-    public ResponseEntity<Fornecedor> buscarFornecedorPorId(@PathVariable UUID id) {
-        Fornecedor fornecedor = fornecedorService.buscarFornecedorPorId(id);
-        return ResponseEntity.ok(fornecedor);
+    public ResponseEntity<FornecedorDTO> buscarFornecedorPorId(@PathVariable UUID id) {
+        FornecedorDTO fornecedorDTO = fornecedorService.buscarFornecedorPorId(id);
+        return ResponseEntity.ok(fornecedorDTO);
     }
 
     @GetMapping
@@ -55,9 +55,9 @@ public class FornecedorController {
         summary = "Lista todos os fornecedores de forma paginada",
         description = "Retorna uma lista de fornecedores, permitindo paginação para lidar com grandes volumes de dados."
     )
-    public ResponseEntity<Page<Fornecedor>> listarFornecedores(@ParameterObject Pageable pageable) {
-        Page<Fornecedor> fornecedores = fornecedorService.listarFornecedores(pageable);
-        return ResponseEntity.ok(fornecedores);
+    public ResponseEntity<Page<FornecedorDTO>> listarFornecedores(@ParameterObject Pageable pageable) {
+        Page<FornecedorDTO> fornecedoresDTO = fornecedorService.listarFornecedores(pageable);
+        return ResponseEntity.ok(fornecedoresDTO);
     }
 
     @PutMapping("/{id}")

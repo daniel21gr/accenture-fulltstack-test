@@ -56,20 +56,21 @@ public class FornecedorService implements IFornecedorService {
     }
 
     @Override
-    public Fornecedor buscarFornecedorPorId(UUID id) {
-        return fornecedorRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fornecedor não encontrado com ID: " + id));
+    public FornecedorDTO buscarFornecedorPorId(UUID id) {
+    	Fornecedor fornecedor = this.obterFornecedorPorId(id);
+        return new FornecedorDTO(fornecedor);
     }
 
     @Override
-    public Page<Fornecedor> listarFornecedores(Pageable pageable) {
-        return fornecedorRepository.findAll(pageable);
+    public Page<FornecedorDTO> listarFornecedores(Pageable pageable) {
+    	Page<Fornecedor> fornecedores = fornecedorRepository.findAll(pageable);
+        return fornecedores.map(FornecedorDTO::new);
     }
 
     @Override
 	@Transactional
     public FornecedorDTO atualizarFornecedor(UUID id, FornecedorInputDTO fornecedorInputDTO) {
-        Fornecedor fornecedorExistente = buscarFornecedorPorId(id);
+        Fornecedor fornecedorExistente = this.obterFornecedorPorId(id);
 
         // 1. Atualiza o endereço usando o EnderecoService
         enderecoService.atualizarEndereco(fornecedorExistente.getEndereco().getId(), fornecedorInputDTO.getEndereco());
@@ -89,6 +90,11 @@ public class FornecedorService implements IFornecedorService {
     @Override
     public void deletarFornecedor(UUID id) {
         fornecedorRepository.deleteById(id);
+    }
+    
+    private Fornecedor obterFornecedorPorId(UUID id) {
+    	return fornecedorRepository.findById(id)
+    			.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fornecedor não encontrado com ID: " + id));
     }
     
     private FornecedorDTO converterParaRespostaDTO(Fornecedor fornecedor) {

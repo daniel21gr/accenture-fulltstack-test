@@ -36,8 +36,8 @@ public class EmpresaController {
 	    description = "Cria uma nova empresa com as informações fornecidas e a salva no banco de dados."
 	)
     public ResponseEntity<EmpresaDTO> criarEmpresa(@RequestBody @Valid EmpresaInputDTO empresaInputDTO) {
-        EmpresaDTO novaEmpresa = empresaService.criarEmpresa(empresaInputDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(novaEmpresa);
+        EmpresaDTO novaEmpresaDTO = empresaService.criarEmpresa(empresaInputDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novaEmpresaDTO);
     }
 
     @GetMapping("/{id}")
@@ -45,9 +45,9 @@ public class EmpresaController {
     	summary = "Busca uma empresa por ID",
     	description = "Retorna uma empresa específica com base no seu ID único."
     )
-    public ResponseEntity<Empresa> buscarEmpresaPorId(@PathVariable UUID id) {
-        Empresa empresa = empresaService.buscarEmpresaPorId(id);
-        return ResponseEntity.ok(empresa);
+    public ResponseEntity<EmpresaDTO> buscarEmpresaPorId(@PathVariable UUID id) {
+        EmpresaDTO empresaDTO = empresaService.buscarEmpresaPorId(id);
+        return ResponseEntity.ok(empresaDTO);
     }
 
     @GetMapping
@@ -55,9 +55,9 @@ public class EmpresaController {
     	summary = "Lista todas as empresas de forma paginada",
     	description = "Retorna uma lista de empresas, permitindo paginação para lidar com grandes volumes de dados."
     )
-    public ResponseEntity<Page<Empresa>> listarEmpresas(@ParameterObject Pageable pageable) {
-        Page<Empresa> empresas = empresaService.listarEmpresas(pageable);
-        return ResponseEntity.ok(empresas);
+    public ResponseEntity<Page<EmpresaDTO>> listarEmpresas(@ParameterObject Pageable pageable) {
+        Page<EmpresaDTO> empresasDTO = empresaService.listarEmpresas(pageable);
+        return ResponseEntity.ok(empresasDTO);
     }
 
     @PutMapping("/{id}")

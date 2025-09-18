@@ -14,9 +14,9 @@ public interface IFornecedorService {
 
 	FornecedorDTO criarFornecedor(FornecedorInputDTO fornecedorInputDTO);
 
-	Fornecedor buscarFornecedorPorId(UUID id);
+	FornecedorDTO buscarFornecedorPorId(UUID id);
 
-	Page<Fornecedor> listarFornecedores(Pageable pageable);
+	Page<FornecedorDTO> listarFornecedores(Pageable pageable);
 
 	FornecedorDTO atualizarFornecedor(UUID id, FornecedorInputDTO fornecedorInputDTO);
 

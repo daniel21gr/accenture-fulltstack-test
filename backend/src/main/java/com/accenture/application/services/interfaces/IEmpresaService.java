@@ -12,9 +12,9 @@ import com.accenture.application.domain.models.Empresa;
 public interface IEmpresaService {
 	EmpresaDTO criarEmpresa(EmpresaInputDTO empresaInputDTO);
 	
-	Empresa buscarEmpresaPorId(UUID id);
+	EmpresaDTO buscarEmpresaPorId(UUID id);
 	
-	Page<Empresa> listarEmpresas(Pageable pageable);
+	Page<EmpresaDTO> listarEmpresas(Pageable pageable);
 	
 	EmpresaDTO atualizarEmpresa(UUID id, EmpresaInputDTO empresaInputDTO);
 	
