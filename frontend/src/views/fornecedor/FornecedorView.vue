@@ -7,11 +7,16 @@ import { useGet } from '@/api/composables/useGet';
 import { useRouter } from 'vue-router';
 import VincularEmpresa from './components/VincularEmpresa.vue';
 import DesvincularEmpresa from './components/DesvincularEmpresa.vue';
+import { useConfirm, useToast } from 'primevue';
+import { useDel } from '@/api/composables/useDel';
 
 const { data: fornecedores, loading, get } = useGet<Page<Fornecedor>>()
 const lastPage = ref<number>(0)
 const router = useRouter()
 const visible = ref(false)
+const confirm = useConfirm()
+const { del: deletion, error } = useDel<Fornecedor>()
+const toast = useToast()
 
 enum TipoVinculo {
   VINCULAR,
@@ -39,7 +44,37 @@ const create = () => {
   router.push({ name: 'FornecedorCreate' })
 }
 
-const del = () => {}
+const deleteFornecedor = async (id: string) => {
+  await deletion(`/fornecedores/${id}`)
+  if (!error.value) {
+    toast.add({
+      severity: 'success',
+      summary: 'Fornecedor excluído com sucesso.',
+      life: 3000
+    });
+  }
+  refresh()
+}
+
+const del = (data: Fornecedor) => {
+  confirm.require({
+    message: 'Tem certeja que deseja excluir?',
+    header: 'Atenção!',
+    icon: 'pi pi-exclamation-triangle',
+    rejectProps: {
+      label: 'Cancelar',
+      severity: 'secondary',
+      outlined: true
+    },
+    acceptProps: {
+      label: 'Excluir',
+      severity: 'danger'
+    },
+    accept: () => {
+      deleteFornecedor(data.id)
+    },
+  })
+}
 
 const fornecedorAtual = ref<Fornecedor>()
 const tipoVinculoAtual = ref<TipoVinculo>(TipoVinculo.VINCULAR)
