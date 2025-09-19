@@ -1,6 +1,6 @@
 <template>
   <DataView :value="empresas" paginator :rows="3" :total-records="totalElements ?? 0" @page="(pageEvent: any) => { onPagination ? onPagination(pageEvent.page) : null }"
-      lazy :loading="loading">
+      :lazy="onPagination ? true : false" :loading="loading">
     <template #list="slotProps">
       <div class="flex flex-col gap-y-3">
         <Card v-for="(empresa, index) in slotProps.items" :key="index" class="shadow-md">

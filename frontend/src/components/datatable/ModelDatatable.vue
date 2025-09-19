@@ -4,8 +4,8 @@
     <span>{{ title }}</span>
     <Button icon="pi pi-plus" @click="create()"></Button>
   </div>
-  <DataTable :value="itens" paginator :rows="1" :rowsPerPageOptions="[10, 50, 100]" tableStyle="min-width: 50rem"
-    paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
+  <DataTable :value="itens" paginator :rows="20" tableStyle="min-width: 50rem"
+    paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
     currentPageReportTemplate="{first} a {last} de {totalRecords}" lazy :loading="loading" :totalRecords="totalRecords"
     @page="(pageEvent: any) => { onPagination(pageEvent.page) }">
     <template #paginatorstart>

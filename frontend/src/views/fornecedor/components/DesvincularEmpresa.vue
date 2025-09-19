@@ -25,5 +25,5 @@ const onAcao = async (empresa: Empresa) => {
 </script>
 
 <template>
-  <GerenciarVinculos :empresas="empresas" :onAcao="onAcao" label="Desvincular" icon="pi pi-user-minus" severity="danger" />
+  <GerenciarVinculos :empresas="empresas" :onAcao="onAcao" label="Desvincular" icon="pi pi-user-minus" severity="danger" :totalElements="empresas?.length ?? 0" />
 </template>

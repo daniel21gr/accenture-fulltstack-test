@@ -23,12 +23,12 @@ onMounted(() => {
 })
 
 const onPagination = (page: number) => {
-  get("/fornecedores", { page, size: 1 })
+  get("/fornecedores", { page })
   lastPage.value = page
 }
 
 const refresh = () => {
-  get("/fornecedores", { page: lastPage.value, size: 1})
+  get("/fornecedores", { page: lastPage.value })
 }
 
 const edit = (data: Fornecedor) => {
@@ -73,7 +73,7 @@ const gerenciarEmpresa = (data: Fornecedor, tipoVinculo: TipoVinculo) => {
         <template #body="slotProps">
           <ul v-if="slotProps.data.empresas && slotProps.data.empresas.length">
             <li v-for="empresa in slotProps.data.empresas" :key="empresa.id">
-              {{ empresa.nomeFantasia }}
+              <span class="pi pi-building"></span> {{ empresa.nomeFantasia }}
             </li>
           </ul>
           <span v-else>Nenhuma</span>
