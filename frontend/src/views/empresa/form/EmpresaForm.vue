@@ -8,7 +8,7 @@
         <p class="text-500 font-medium">{{ description }}</p>
       </div>
 
-      <Form v-slot="$form" @submit="onFormSubmit" class="flex flex-col gap-4" :initialValues :resolver>
+      <Form v-slot="$form" ref="formRef" @submit="onFormSubmit" class="flex flex-col gap-4" :initialValues :resolver>
 
         <!-- Informações da Empresa -->
         <div class="p-4 border-1 border-gray-200 rounded-2xl flex flex-col gap-3">
@@ -38,39 +38,35 @@
             </div>
             <div>
               <label for="rua">Rua</label>
-              <InputText id="rua" name="endereco.rua" type="text" class="w-full" />
-               <!-- <Message v-if="formErrors['endereco.rua']" severity="error" class="mt-1">{{ formErrors['endereco.rua'] }}</Message> -->
+              <InputText id="rua" name="endereco.rua" type="text" class="w-full" readonly />
             </div>
             <div>
               <label for="numero">Número</label>
               <InputNumber id="numero" name="endereco.numero" class="w-full" />
-               <!-- <Message v-if="formErrors['endereco.numero']" severity="error" class="mt-1">{{ formErrors['endereco.numero'] }}</Message> -->
+               <Message v-if="$form.endereco?.numero.invalid" severity="error" class="mt-1">{{ $form.endereco.numero.error?.message }}</Message>
             </div>
             <div>
               <label for="bairro">Bairro</label>
-              <InputText id="bairro" name="endereco.bairro" type="text" class="w-full" />
-               <!-- <Message v-if="formErrors['endereco.bairro']" severity="error" class="mt-1">{{ formErrors['endereco.bairro'] }}</Message> -->
+              <InputText id="bairro" name="endereco.bairro" type="text" class="w-full" readonly />
             </div>
             <div>
               <label for="cidade">Cidade</label>
-              <InputText id="cidade" name="endereco.cidade" type="text" class="w-full" />
-               <!-- <Message v-if="formErrors['endereco.cidade']" severity="error" class="mt-1">{{ formErrors['endereco.cidade'] }}</Message> -->
+              <InputText id="cidade" name="endereco.cidade" type="text" class="w-full" readonly />
             </div>
             <div>
               <label for="uf">UF</label>
-              <InputText id="uf" name="endereco.uf" type="text" class="w-full" />
-               <!-- <Message v-if="formErrors['endereco.uf']" severity="error" class="mt-1">{{ formErrors['endereco.uf'] }}</Message> -->
+              <InputText id="uf" name="endereco.uf" type="text" class="w-full" readonly />
             </div>
             <div>
               <label for="estado">Estado</label>
-              <InputText id="estado" name="endereco.estado" type="text" class="w-full" />
-               <!-- <Message v-if="formErrors['endereco.estado']" severity="error" class="mt-1">{{ formErrors['endereco.estado'] }}</Message> -->
+              <InputText id="estado" name="endereco.estado" type="text" class="w-full" readonly />
             </div>
           </div>
         </div>
 
         <!-- Botão de Submit -->
-        <div class="flex justify-center mt-4">
+        <div class="flex justify-center mt-4 gap-x-3">
+          <Button @click="onClickReturn" label="Voltar para listagem" severity="secondary" outlined />
           <Button type="submit" :label="buttonLabel" class="p-button-lg" />
         </div>
       </Form>
@@ -81,34 +77,33 @@
 
 <script setup lang="ts">
 import { buscarCep } from '@/api/viaCep';
-import { validarCEP } from '@/validations/cep';
 import { validarCNPJ } from '@/validations/cnpj';
-import { reactive, ref } from 'vue';
+import { ref, useTemplateRef, watch } from 'vue';
+import type { Empresa } from '../types';
+import { useRouter } from 'vue-router';
+import type { FormInstance } from '@primevue/forms';
 
 type EmpresaFormProps = {
   title: string,
   description: string,
   buttonLabel: string,
-  onFormSubmit: ({ valid }: { valid: boolean }) => void
+  initialValues: Empresa,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onFormSubmit: ({ valid, values, reset }: { valid: boolean, values: Record<string, any>, reset: () => void }) => void
 }
 
-defineProps<EmpresaFormProps>();
+const { initialValues } = defineProps<EmpresaFormProps>();
 
+const formEmpresaRef = useTemplateRef<FormInstance>('formRef')
+const router = useRouter()
 const erroCep = ref(false)
 
-const initialValues = reactive({
-    cnpj: '',
-    nomeFantasia: '',
-    endereco: {
-        cep: '',
-        rua: '',
-        numero: null,
-        bairro: '',
-        cidade: '',
-        uf: '',
-        estado: ''
-    }
-});
+watch(() => initialValues, async () => {
+  formEmpresaRef.value?.setValues(initialValues)
+  formEmpresaRef.value?.setFieldValue('endereco.cep', initialValues.endereco.cep)
+  formEmpresaRef.value?.setFieldValue('endereco.numero', initialValues.endereco.numero)
+})
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const resolver = async ({ values }: { values: Record<string, any> }) => {
@@ -117,6 +112,7 @@ const resolver = async ({ values }: { values: Record<string, any> }) => {
     nomeFantasia?: Array<{ message: string }>
     endereco?: {
       cep?: Array<{ message: string }>
+      numero?: Array<{ message: string }>
     }
   } = {}
 
@@ -128,12 +124,16 @@ const resolver = async ({ values }: { values: Record<string, any> }) => {
     errors.cnpj = [{ message: 'CNPJ é obrigatório.' }]
   }
 
-  if (!values.nomeFantansia) {
+  if (!values.nomeFantasia) {
     errors.nomeFantasia = [{ message: 'Nome fantasia é obrigatório.' }]
   }
 
   if (!values.endereco.cep) {
     errors.endereco = { cep: [{ message: 'CEP é obrigatório.' }] }
+  }
+
+  if (!values.endereco.numero) {
+    errors.endereco = { ...errors.endereco, numero: [{ message: 'Número é obrigatório.' }] }
   }
 
   return {
@@ -144,6 +144,10 @@ const resolver = async ({ values }: { values: Record<string, any> }) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onCepChange = async (form: any, dados: string) => {
+  if (dados === '') {
+    return
+  }
+
   const data = await buscarCep(dados)
 
   if (data.erro) {
@@ -156,5 +160,10 @@ const onCepChange = async (form: any, dados: string) => {
   form.endereco.cidade.value = data.localidade
   form.endereco.uf.value = data.uf
   form.endereco.estado.value = data.estado
+  erroCep.value = false
+}
+
+const onClickReturn = () => {
+  router.push({ name: "Empresa"})
 }
 </script>
