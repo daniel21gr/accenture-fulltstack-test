@@ -24,7 +24,6 @@ declare module 'vue' {
     Menubar: typeof import('primevue/menubar')['default']
     Message: typeof import('primevue/message')['default']
     ModelDatatable: typeof import('./src/components/datatable/ModelDatatable.vue')['default']
-    Navbar: typeof import('./src/components/navbar/Navbar.vue')['default']
     NavBar: typeof import('./src/components/navbar/NavBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

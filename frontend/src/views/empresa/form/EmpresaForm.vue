@@ -34,7 +34,7 @@
             <div>
               <label for="cep">CEP</label>
               <InputMask id="cep" name="endereco.cep" type="text" placeholder="99999-999" mask="99999-999" class="w-full" @value-change="(dados) => { onCepChange($form, dados) }" />
-               <Message v-if="$form.endereco?.cep?.invalid || erroCep" severity="error" class="mt-1">{{ erroCep ? "CEP inválido" : $form.endereco.cep.error?.message }}</Message>
+               <Message v-if="($form.endereco as any)?.cep?.invalid || erroCep" severity="error" class="mt-1">{{ erroCep ? "CEP inválido" : ($form.endereco as any)?.cep.error?.message }}</Message>
             </div>
             <div>
               <label for="rua">Rua</label>
@@ -43,7 +43,7 @@
             <div>
               <label for="numero">Número</label>
               <InputNumber id="numero" name="endereco.numero" class="w-full" />
-               <Message v-if="$form.endereco?.numero.invalid" severity="error" class="mt-1">{{ $form.endereco.numero.error?.message }}</Message>
+               <Message v-if="($form.endereco as any)?.numero?.invalid" severity="error" class="mt-1">{{ ($form.endereco as any)?.numero.error?.message }}</Message>
             </div>
             <div>
               <label for="bairro">Bairro</label>
