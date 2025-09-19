@@ -1,0 +1,42 @@
+
+<template>
+  <div class="button-create flex w-full justify-between items-center">
+    <span>{{ title }}</span>
+    <Button icon="pi pi-plus" @click="create()"></Button>
+  </div>
+  <DataTable :value="itens" paginator :rows="1" :rowsPerPageOptions="[10, 50, 100]" tableStyle="min-width: 50rem"
+    paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
+    currentPageReportTemplate="{first} a {last} de {totalRecords}" lazy :loading="loading" :totalRecords="totalRecords"
+    @page="(pageEvent: any) => { onPagination(pageEvent.page) }">
+    <template #paginatorstart>
+      <Button @click="refresh()" type="button" icon="pi pi-refresh" text />
+    </template>
+    <template #paginatorend>
+    </template>
+    <slot name="columns" />
+    <Column header="Ações">
+      <template #body="slotProps">
+        <Button icon="pi pi-pencil" @click="edit(slotProps.data)" class="p-button-rounded p-button-info mr-2" />
+        <!-- <Button icon="pi pi-trash" @click="confirmDeleteFornecedor(slotProps.data)" class="p-button-rounded p-button-danger mr-2" />
+        <Button label="Vincular Empresas" icon="pi pi-link" @click="manageRelationships(slotProps.data)" class="p-button-rounded p-button-secondary" /> -->
+      </template>
+    </Column>
+  </DataTable>
+</template>
+
+<script setup lang="ts" generic="TModel">
+
+type ModelDatatableProps = {
+  title: string,
+  itens: Array<TModel>,
+  loading: boolean,
+  totalRecords: number,
+  onPagination: (page: number) => void,
+  refresh: () => void,
+  edit: (data: TModel) => void,
+  create: () => void,
+}
+
+defineProps<ModelDatatableProps>();
+
+</script>

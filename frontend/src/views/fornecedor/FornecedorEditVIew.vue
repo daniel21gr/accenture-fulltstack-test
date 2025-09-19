@@ -1,0 +1,3 @@
+<template>
+  Fornecedor Edit
+</template>
