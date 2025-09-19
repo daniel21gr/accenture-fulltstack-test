@@ -34,7 +34,7 @@ public class EmpresaController {
     	summary = "Cria uma nova empresa",
 	    description = "Cria uma nova empresa com as informações fornecidas e a salva no banco de dados."
 	)
-    public ResponseEntity<EmpresaDTO> criarEmpresa(@RequestBody @Valid EmpresaInputDTO empresaInputDTO) {
+    public ResponseEntity<EmpresaDTO> criarEmpresa(@RequestBody @Valid EmpresaInputDTO empresaInputDTO) throws Exception {
         EmpresaDTO novaEmpresaDTO = empresaService.criarEmpresa(empresaInputDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novaEmpresaDTO);
     }

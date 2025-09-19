@@ -9,7 +9,7 @@ import com.accenture.application.domain.dtos.inputs.EmpresaInputDTO;
 import com.accenture.application.domain.dtos.responses.EmpresaDTO;
 
 public interface IEmpresaService {
-	EmpresaDTO criarEmpresa(EmpresaInputDTO empresaInputDTO);
+	EmpresaDTO criarEmpresa(EmpresaInputDTO empresaInputDTO) throws Exception;
 	
 	EmpresaDTO buscarEmpresaPorId(UUID id);
 	

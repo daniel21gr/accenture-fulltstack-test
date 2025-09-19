@@ -31,7 +31,11 @@ public class EmpresaService implements IEmpresaService {
 
 	@Override
 	@Transactional
-	public EmpresaDTO criarEmpresa(EmpresaInputDTO empresaInputDTO) {
+	public EmpresaDTO criarEmpresa(EmpresaInputDTO empresaInputDTO) throws Exception {
+		if (empresaRepository.existsByCnpj(empresaInputDTO.getCnpj())) {
+			throw new Exception("CNPJ já cadastrado para outra empresa.");
+		}
+		
 		// 1. Converte o DTO de Endereço para a entidade e salva
         Endereco novoEndereco = enderecoService.criarEndereco(empresaInputDTO.getEndereco());
 

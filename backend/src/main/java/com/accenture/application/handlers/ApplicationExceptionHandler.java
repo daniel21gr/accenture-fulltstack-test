@@ -31,4 +31,10 @@ public class ApplicationExceptionHandler {
         String errorMessage = ex.getMessage();
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
     }
+    
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception ex) {
+        String errorMessage = ex.getMessage();
+        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
+    }
 }
