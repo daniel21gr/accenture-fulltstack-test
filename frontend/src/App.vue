@@ -5,6 +5,7 @@ import NavBar from './components/navbar/NavBar.vue';
 
 <template>
   <Toast />
+  <ConfirmDialog></ConfirmDialog>
   <NavBar />
   <div class="p-12">
     <RouterView />

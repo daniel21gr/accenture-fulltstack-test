@@ -17,8 +17,8 @@
     <Column header="Ações">
       <template #body="slotProps">
         <Button icon="pi pi-pencil" @click="edit(slotProps.data)" class="p-button-rounded p-button-info mr-2" />
-        <!-- <Button icon="pi pi-trash" @click="confirmDeleteFornecedor(slotProps.data)" class="p-button-rounded p-button-danger mr-2" />
-        <Button label="Vincular Empresas" icon="pi pi-link" @click="manageRelationships(slotProps.data)" class="p-button-rounded p-button-secondary" /> -->
+        <Button icon="pi pi-trash" @click="del(slotProps.data)" class="p-button-rounded p-button-danger mr-2" />
+        <!-- <Button label="Vincular Empresas" icon="pi pi-link" @click="manageRelationships(slotProps.data)" class="p-button-rounded p-button-secondary" /> -->
       </template>
     </Column>
   </DataTable>
@@ -35,8 +35,8 @@ type ModelDatatableProps = {
   refresh: () => void,
   edit: (data: TModel) => void,
   create: () => void,
+  del: (data: TModel) => void,
 }
 
 defineProps<ModelDatatableProps>();
-
 </script>

@@ -4,9 +4,14 @@ import EmpresaForm from './form/EmpresaForm.vue';
 import { useRoute } from 'vue-router';
 import { useGet } from '@/api/composables/useGet';
 import type { Empresa } from './types';
+import { sanitizeMaskedInput } from '@/utils/sanitizarMascaras';
+import { useUpdate } from '@/api/composables/useUpdate';
+import { useToast } from 'primevue';
 
 const route = useRoute()
 const { data: empresa, get } = useGet<Empresa>()
+const { error, put } = useUpdate<Empresa, Empresa>()
+const toast = useToast()
 
 const emptyForm = reactive<Empresa>({
     id: '',
@@ -28,14 +33,26 @@ onMounted(async () => {
     await get(`/empresas/${id}`)
 })
 
-const onFormSubmit = ({ valid, reset }: { valid: boolean, reset: () => void }) => {
+const onFormSubmit = async ({ valid, values }: { valid: boolean, values: Record<string, any> }) => {
     if (valid) {
-        /* toast.add({
-            severity: 'success',
-            summary: 'Form is submitted.',
+        values.cnpj = sanitizeMaskedInput(values.cnpj)
+        values.endereco.cep = sanitizeMaskedInput(values.endereco.cep)
+        await put(`/empresas/${route.params.id}`, values as Empresa)
+        if (error.value) {
+          const errorResponse = (typeof error?.value?.response?.data == "object") ?
+            Object.values(error?.value?.response?.data as Record<string, string>).join('\n') : error?.value?.response?.data?.toString()
+          toast.add({
+            severity: 'error',
+            summary: errorResponse ?? '',
             life: 3000
-        }); */
-        console.log('teste de edição');
+          })
+          return
+        }
+        toast.add({
+            severity: 'success',
+            summary: 'Empresa atualizada com sucesso.',
+            life: 3000
+        });
     }
 };
 </script>

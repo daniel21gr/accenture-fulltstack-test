@@ -6,7 +6,7 @@ import 'primeicons/primeicons.css'
 
 import App from './App.vue'
 import router from './router'
-import { ToastService } from 'primevue'
+import { ConfirmationService, ToastService } from 'primevue'
 
 const app = createApp(App)
 
@@ -21,5 +21,6 @@ app.use(PrimeVue, {
   }
 });
 app.use(ToastService)
+app.use(ConfirmationService)
 
 app.mount('#app')
