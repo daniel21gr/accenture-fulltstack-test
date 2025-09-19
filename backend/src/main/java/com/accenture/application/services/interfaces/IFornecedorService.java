@@ -22,7 +22,7 @@ public interface IFornecedorService {
 
 	void deletarFornecedor(UUID id);
 	
-	FornecedorDTO vincularFornecedorAEmpresa(UUID fornecedorId, UUID empresaId);
+	FornecedorDTO vincularFornecedorAEmpresa(UUID fornecedorId, UUID empresaId) throws Exception;
 
     Fornecedor desvincularFornecedorDeEmpresa(UUID fornecedorId, UUID empresaId);
 

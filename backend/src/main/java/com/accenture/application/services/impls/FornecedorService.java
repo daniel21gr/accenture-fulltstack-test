@@ -106,14 +106,17 @@ public class FornecedorService implements IFornecedorService {
     
     @Override
     @Transactional
-    public FornecedorDTO vincularFornecedorAEmpresa(UUID fornecedorId, UUID empresaId) {
+    public FornecedorDTO vincularFornecedorAEmpresa(UUID fornecedorId, UUID empresaId) throws Exception {
         Fornecedor fornecedor = this.obterFornecedorPorId(fornecedorId);
         Empresa empresa = empresaRepository.findById(empresaId)
-            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Empresa não encontrada com ID: " + empresaId));
+            .orElseThrow(() -> new NoSuchElementException("Empresa não encontrada com ID: " + empresaId));
+        
+        if (fornecedor.getEmpresas().contains(empresa)) {
+        	throw new Exception("Empresa já vinculada ao fornecedor.");
+        }
 
         // Adiciona a empresa ao fornecedor, se ainda não estiver associada
-        if (this.validarAssociacaoComEmpresaPR(fornecedor, empresa) &&
-        		!fornecedor.getEmpresas().contains(empresa)) {
+        if (this.validarAssociacaoComEmpresaPR(fornecedor, empresa)) {
             fornecedor.getEmpresas().add(empresa);
             empresa.getFornecedores().add(fornecedor);
         }

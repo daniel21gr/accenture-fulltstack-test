@@ -85,7 +85,7 @@ public class FornecedorController {
         summary = "Vincula uma empresa a um fornecedor",
         description = "Associa uma empresa existente a um fornecedor existente."
     )
-    public ResponseEntity<FornecedorDTO> vincularEmpresa(@PathVariable UUID fornecedorId, @PathVariable UUID empresaId) {
+    public ResponseEntity<FornecedorDTO> vincularEmpresa(@PathVariable UUID fornecedorId, @PathVariable UUID empresaId) throws Exception {
         FornecedorDTO fornecedorAtualizado = fornecedorService.vincularFornecedorAEmpresa(fornecedorId, empresaId);
         return ResponseEntity.ok(fornecedorAtualizado);
     }
