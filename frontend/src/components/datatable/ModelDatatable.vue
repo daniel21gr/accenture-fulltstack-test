@@ -4,10 +4,10 @@
     <span>{{ title }}</span>
     <Button icon="pi pi-plus" @click="create()"></Button>
   </div>
-  <DataTable :value="itens" paginator :rows="20" tableStyle="min-width: 50rem"
+  <DataTable v-model:filters="filters" :value="itens" paginator :rows="20" tableStyle="min-width: 50rem"
     paginatorTemplate="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
     currentPageReportTemplate="{first} a {last} de {totalRecords}" lazy :loading="loading" :totalRecords="totalRecords"
-    @page="(pageEvent: any) => { onPagination(pageEvent.page) }">
+    @page="(pageEvent: any) => { onPagination(pageEvent.page) }" filterDisplay="menu" @filter="(e: DataTableFilterEvent) => emit('applyFilter', e)">
     <template #paginatorstart>
       <Button @click="refresh()" type="button" icon="pi pi-refresh" text />
     </template>
@@ -27,6 +27,9 @@
 </template>
 
 <script setup lang="ts" generic="TModel">
+import type { DataTableFilterEvent, DataTableFilterMeta } from 'primevue';
+import { FilterMatchMode } from '@primevue/core/api'
+import { ref } from 'vue';
 
 type ModelDatatableProps = {
   title: string,
@@ -41,4 +44,10 @@ type ModelDatatableProps = {
 }
 
 defineProps<ModelDatatableProps>();
+
+const filters = ref<DataTableFilterMeta>({
+  nome: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  documento: { value: null, matchMode: FilterMatchMode.CONTAINS },
+})
+const emit = defineEmits(['applyFilter'])
 </script>

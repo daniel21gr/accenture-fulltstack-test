@@ -49,13 +49,37 @@ const gerenciarEmpresa = (data: Fornecedor, tipoVinculo: TipoVinculo) => {
 
   visible.value = true
 }
+
+const applyFilter = (e: { filters: { nome: { value: string }, documento: { value: string }}}) => {
+  const filtroNome = e.filters.nome.value
+  const filtroDocumento = e.filters.documento.value
+
+  get("/fornecedores", { page: lastPage.value,  nome: filtroNome, documento: filtroDocumento })
+}
 </script>
 
 <template>
-  <ModelDatatable title="Fornecedor" :itens="fornecedores?.content ?? []" :loading="loading" :total-records="fornecedores?.totalElements ?? 0" :onPagination="onPagination" :refresh="refresh" :edit="edit" :create="create" :del="del">
+  <ModelDatatable title="Fornecedor" :itens="fornecedores?.content ?? []" :loading="loading" :total-records="fornecedores?.totalElements ?? 0" :onPagination="onPagination" :refresh="refresh" :edit="edit" :create="create" :del="del"
+      @apply-filter="applyFilter">
     <template #columns>
-      <Column field="nome" header="Nome" sortable></Column>
-      <Column field="documento" header="CPF/CNPJ" sortable></Column>
+      <Column field="nome" header="Nome" sortable :show-filter-match-modes="false">
+        <template #filter="{ filterModel }">
+          <InputText
+            v-model="filterModel.value"
+            type="text"
+            placeholder="Buscar pelo nome"
+          />
+        </template>
+      </Column>
+      <Column field="documento" header="CPF/CNPJ" sortable :show-filter-match-modes="false">
+        <template #filter="{ filterModel }">
+          <InputText
+            v-model="filterModel.value"
+            type="text"
+            placeholder="Buscar pelo documento"
+          />
+        </template>
+      </Column>
       <Column field="email" header="Email"></Column>
       <Column header="Tipo">
         <template #body="slotProps">
