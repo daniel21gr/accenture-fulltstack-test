@@ -79,7 +79,11 @@ public class EmpresaService implements IEmpresaService {
 	}
 
 	@Override
-	public void deletarEmpresa(UUID id) {
+	public void deletarEmpresa(UUID id) throws Exception {
+		if (!this.obterEmpresaPorId(id).getFornecedores().isEmpty()) {
+    		throw new Exception("Empresa com fornecedores vinculados. Não é possível excluir.");
+    	}
+		
 		empresaRepository.deleteById(id);
 	}
 	

@@ -17,5 +17,5 @@ public interface IEmpresaService {
 	
 	EmpresaDTO atualizarEmpresa(UUID id, EmpresaInputDTO empresaInputDTO);
 	
-	void deletarEmpresa(UUID id);
+	void deletarEmpresa(UUID id) throws Exception;
 }

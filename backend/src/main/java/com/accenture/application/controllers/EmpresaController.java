@@ -74,7 +74,7 @@ public class EmpresaController {
     	summary = "Deleta uma empresa",
     	description = "Deleta uma empresa e seu endereço associado permanentemente do banco de dados."
     )
-    public ResponseEntity<Void> deletarEmpresa(@PathVariable UUID id) {
+    public ResponseEntity<Void> deletarEmpresa(@PathVariable UUID id) throws Exception {
         empresaService.deletarEmpresa(id);
         return ResponseEntity.noContent().build();
     }

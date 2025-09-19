@@ -100,7 +100,11 @@ public class FornecedorService implements IFornecedorService {
     }
 
     @Override
-    public void deletarFornecedor(UUID id) {
+    public void deletarFornecedor(UUID id) throws Exception {
+    	if (!this.obterFornecedorPorId(id).getEmpresas().isEmpty()) {
+    		throw new Exception("Fornecedor com empresas vinculadas. Não é possível excluir.");
+    	}
+    	
         fornecedorRepository.deleteById(id);
     }
     

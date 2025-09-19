@@ -75,7 +75,7 @@ public class FornecedorController {
         summary = "Deleta um fornecedor",
         description = "Deleta um fornecedor e seu endereço associado permanentemente do banco de dados."
     )
-    public ResponseEntity<Void> deletarFornecedor(@PathVariable UUID id) {
+    public ResponseEntity<Void> deletarFornecedor(@PathVariable UUID id) throws Exception {
         fornecedorService.deletarFornecedor(id);
         return ResponseEntity.noContent().build();
     }

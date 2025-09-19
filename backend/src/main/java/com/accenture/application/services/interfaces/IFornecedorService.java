@@ -20,7 +20,7 @@ public interface IFornecedorService {
 
 	FornecedorDTO atualizarFornecedor(UUID id, FornecedorInputDTO fornecedorInputDTO);
 
-	void deletarFornecedor(UUID id);
+	void deletarFornecedor(UUID id) throws Exception;
 	
 	FornecedorDTO vincularFornecedorAEmpresa(UUID fornecedorId, UUID empresaId) throws Exception;
 
