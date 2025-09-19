@@ -16,9 +16,11 @@
     <slot name="columns" />
     <Column header="Ações">
       <template #body="slotProps">
-        <Button icon="pi pi-pencil" @click="edit(slotProps.data)" class="p-button-rounded p-button-info mr-2" />
-        <Button icon="pi pi-trash" @click="del(slotProps.data)" class="p-button-rounded p-button-danger mr-2" />
-        <!-- <Button label="Vincular Empresas" icon="pi pi-link" @click="manageRelationships(slotProps.data)" class="p-button-rounded p-button-secondary" /> -->
+        <div class="flex gap-2">
+          <Button icon="pi pi-pencil" @click="edit(slotProps.data)" class="p-button-rounded p-button-info" />
+          <Button icon="pi pi-trash" @click="del(slotProps.data)" class="p-button-rounded p-button-danger" />
+          <slot name="extra-actions" :data="slotProps.data" />
+        </div>
       </template>
     </Column>
   </DataTable>
