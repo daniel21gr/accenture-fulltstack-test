@@ -115,7 +115,6 @@ import { validarCNPJ } from '@/validations/cnpj';
 import { ref, useTemplateRef, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { TipoFornecedor, type Fornecedor } from '../types'; // Altere para o tipo Fornecedor no lugar de Empresa
-import { useToast } from 'primevue';
 import type { FormInstance } from '@primevue/forms';
 import { validarCPF } from '@/validations/cpf';
 
@@ -141,11 +140,14 @@ watch(() => initialValues, async () => {
 });
 
 // Resolver validação
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const resolver = async ({ values }: { values: Record<string, any> }) => {
   const errors: {
     documento?: Array<{ message: string }>;
     nome?: Array<{ message: string }>;
     email?: Array<{ message: string }>;
+    rg?: Array<{ message: string }>;
+    dataNascimento?: Array<{ message: string }>;
     endereco?: {
       cep?: Array<{ message: string }>;
       numero?: Array<{ message: string }>;
@@ -156,6 +158,14 @@ const resolver = async ({ values }: { values: Record<string, any> }) => {
     if (!validarCPF(values.documento)) {
       errors.documento = [{ message: 'CPF inválido!' }];
     }
+
+    if (!values.rg) {
+      errors.rg = [{ message: 'RG é obrigatório para Pessoa Física.' }];
+    }
+    if (!values.dataNascimento) {
+      errors.dataNascimento = [{ message: 'Data de nascimento é obrigatória para Pessoa Física.'}];
+    }
+
   } else {
     if (!validarCNPJ(values.documento)) {
       errors.documento = [{ message: 'CNPJ inválido!' }];
@@ -189,6 +199,7 @@ const resolver = async ({ values }: { values: Record<string, any> }) => {
 };
 
 // Função para busca de CEP
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onCepChange = async (form: any, dados: string) => {
   if (dados === '') return;
 

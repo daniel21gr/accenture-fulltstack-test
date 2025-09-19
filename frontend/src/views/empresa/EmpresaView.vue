@@ -38,13 +38,21 @@ const create = () => {
 
 const deleteEmpresa = async (id: string) => {
   await deletion(`/empresas/${id}`)
-  if (!error.value) {
+  if (error.value) {
+    const errorResponse = (typeof error?.value?.response?.data == "object") ?
+      Object.values(error?.value?.response?.data as Record<string, string>).join('\n') : error?.value?.response?.data?.toString()
     toast.add({
-      severity: 'success',
-      summary: 'Empresa excluída com sucesso.',
+      severity: 'error',
+      summary: errorResponse ?? '',
       life: 3000
-    });
+    })
+    return
   }
+  toast.add({
+    severity: 'success',
+    summary: 'Empresa excluída com sucesso.',
+    life: 3000
+  });
   refresh()
 }
 
