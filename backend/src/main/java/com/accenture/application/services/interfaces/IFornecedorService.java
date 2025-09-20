@@ -12,7 +12,7 @@ import com.accenture.application.domain.models.Fornecedor;
 
 public interface IFornecedorService {
 
-	FornecedorDTO criarFornecedor(FornecedorInputDTO fornecedorInputDTO);
+	FornecedorDTO criarFornecedor(FornecedorInputDTO fornecedorInputDTO) throws Exception;
 
 	FornecedorDTO buscarFornecedorPorId(UUID id);
 

@@ -42,7 +42,12 @@ public class FornecedorService implements IFornecedorService {
 
     @Override
 	@Transactional
-    public FornecedorDTO criarFornecedor(FornecedorInputDTO fornecedorInputDTO) {
+    public FornecedorDTO criarFornecedor(FornecedorInputDTO fornecedorInputDTO) throws Exception {
+    	if (fornecedorRepository.existsByDocumento(fornecedorInputDTO.getDocumento()) ||
+    			fornecedorRepository.existsByDocumento(fornecedorInputDTO.getDocumento())) {
+			throw new Exception("Documento já cadastrado para outro fornecedor.");
+		}
+    	
         // 1. Usa o EnderecoService para criar o Endereco
         Endereco novoEndereco = enderecoService.criarEndereco(fornecedorInputDTO.getEndereco());
         

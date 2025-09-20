@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface FornecedorRepository extends JpaRepository<Fornecedor, UUID>, JpaSpecificationExecutor<Fornecedor> {
+	boolean existsByDocumento(String documento);
 }

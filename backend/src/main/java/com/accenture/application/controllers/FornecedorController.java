@@ -35,7 +35,7 @@ public class FornecedorController {
         summary = "Cria um novo fornecedor",
         description = "Cria um novo fornecedor com as informações fornecidas e o salva no banco de dados."
     )
-    public ResponseEntity<FornecedorDTO> criarFornecedor(@RequestBody @Valid FornecedorInputDTO fornecedorInputDTO) {
+    public ResponseEntity<FornecedorDTO> criarFornecedor(@RequestBody @Valid FornecedorInputDTO fornecedorInputDTO) throws Exception {
         FornecedorDTO novoFornecedor = fornecedorService.criarFornecedor(fornecedorInputDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoFornecedor);
     }
