@@ -18,6 +18,8 @@ const router = createRouter({
     { path: '/fornecedores/create', component: FornecedorCreateVIew, name: 'FornecedorCreate', },
     { path: '/fornecedores/edit/:id', component: FornecedorEditVIew, name: 'FornecedorEdit', },
 
+    { path: '/', redirect: { name: 'Empresa' }},
+
     // Rota coringa para 404
     {
       path: '/:pathMatch(.*)*',
