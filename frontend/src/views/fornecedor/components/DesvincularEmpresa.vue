@@ -11,6 +11,7 @@ const { fornecedor } = defineProps<{
 
 const { error, del } = useDel<void>()
 const toast = useToast()
+const emit = defineEmits(["refresh"])
 
 const onAcao = async (empresa: Empresa) => {
   await del(`/fornecedores/${fornecedor}/empresas/${empresa.id}`)
@@ -20,6 +21,7 @@ const onAcao = async (empresa: Empresa) => {
       summary: 'Vínculo excluído com sucesso.',
       life: 3000
     });
+    emit("refresh")
   }
 }
 </script>

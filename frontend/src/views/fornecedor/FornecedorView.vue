@@ -105,7 +105,7 @@ const applyFilter = (e: { filters: { nome: { value: string }, documento: { value
   <ModelDatatable title="Fornecedor" :itens="fornecedores?.content ?? []" :loading="loading" :total-records="fornecedores?.totalElements ?? 0" :onPagination="onPagination" :refresh="refresh" :edit="edit" :create="create" :del="del"
       @apply-filter="applyFilter">
     <template #columns>
-      <Column field="nome" header="Nome" sortable :show-filter-match-modes="false">
+      <Column field="nome" header="Nome" :show-filter-match-modes="false">
         <template #filter="{ filterModel }">
           <InputText
             v-model="filterModel.value"
@@ -114,7 +114,7 @@ const applyFilter = (e: { filters: { nome: { value: string }, documento: { value
           />
         </template>
       </Column>
-      <Column field="documento" header="CPF/CNPJ" sortable :show-filter-match-modes="false">
+      <Column field="documento" header="CPF/CNPJ" :show-filter-match-modes="false">
         <template #filter="{ filterModel }">
           <InputText
             v-model="filterModel.value"
@@ -156,7 +156,7 @@ const applyFilter = (e: { filters: { nome: { value: string }, documento: { value
 
   <Dialog v-model:visible="visible" modal :header="(tipoVinculoAtual == TipoVinculo.VINCULAR ? 'Vincular empresa' : 'Desvincular empresa')" :style="{ width: '25rem' }">
     <VincularEmpresa v-if="tipoVinculoAtual == TipoVinculo.VINCULAR" :fornecedor="fornecedorAtual?.id ?? ''" @refresh="refresh" />
-    <DesvincularEmpresa v-else :fornecedor="fornecedorAtual?.id ?? ''" :empresas="fornecedorAtual?.empresas ?? []" />
+    <DesvincularEmpresa v-else :fornecedor="fornecedorAtual?.id ?? ''" :empresas="fornecedorAtual?.empresas ?? []" @refresh="refresh" />
     <div class="flex justify-end gap-2">
       <Button type="button" label="Fechar" severity="secondary" @click="visible = false"></Button>
     </div>

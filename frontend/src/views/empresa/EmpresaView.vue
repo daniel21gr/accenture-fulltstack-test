@@ -80,8 +80,8 @@ const del = (data: Empresa) => {
 <template>
   <ModelDatatable title="Empresa" :itens="empresas?.content ?? []" :loading="loading" :total-records="empresas?.totalElements ?? 0" :onPagination="onPagination" :refresh="refresh" :edit="edit" :create="create" :del="del">
     <template #columns>
-      <Column field="cnpj" header="CNPJ" sortable></Column>
-      <Column field="nomeFantasia" header="Nome Fantasia" sortable></Column>
+      <Column field="cnpj" header="CNPJ"></Column>
+      <Column field="nomeFantasia" header="Nome Fantasia"></Column>
       <Column header="Endereço">
         <template #body="slotProps">
           <div v-if="slotProps.data.endereco">
